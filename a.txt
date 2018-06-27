@@ -1,0 +1,49 @@
+ystemctl status named.service
+● named.service - Berkeley Internet Name Domain (DNS)
+   Loaded: loaded (/usr/lib/systemd/system/named.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since 四 2018-05-24 15:03:39 CST; 1min 32s ago
+  Process: 4997 ExecStop=/bin/sh -c /usr/sbin/rndc stop > /dev/null 2>&1 || /bin/kill -TERM $MAINPID (code=exited, status=0/SUCCESS)
+  Process: 2837 ExecStart=/usr/sbin/named -u named -c ${NAMEDCONF} $OPTIONS (code=exited, status=0/SUCCESS)
+  Process: 5234 ExecStartPre=/bin/bash -c if [ ! "$DISABLE_ZONE_CHECKING" == "yes" ]; then /usr/sbin/named-checkconf -z "$NAMEDCONF"; else echo "Checking of zone files is disabled"; fi (code=exited, status=1/FAILURE)
+ Main PID: 2840 (code=exited, status=0/SUCCESS)
+
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: zone qq.com/IN: loaded serial 0
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: zone 163.com/IN: loaded serial 0
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: 163.com.other:8: ignoring out-of-zone data (163.com)
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: zone qq.com/IN: has no NS records
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: zone qq.com/IN: not loaded due to errors.
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: 163b/qq.com/IN: bad zone
+5月 24 15:03:39 srv7.tedu.cn systemd[1]: named.service: control process exited, code=exited status=1
+5月 24 15:03:39 srv7.tedu.cn systemd[1]: Failed to start Berkeley Internet Name Domain (DNS).
+5月 24 15:03:39 srv7.tedu.cn systemd[1]: Unit named.service entered failed state.
+5月 24 15:03:39 srv7.tedu.cn systemd[1]: named.service failed.
+Hint: Some lines were ellipsized, use -l to show in full.
+[root@srv7 named]# ls /var/named/
+163.com.other  chroot  dynamic   named.empty      named.loopback  qq.com.zone  tedu.cn.zone
+163.com.zone   data    named.ca  named.localhost  qq.com.other    slaves
+[root@srv7 named]# vim /var/named/qq.com.zone 
+[root@srv7 named]# vim /var/named/qq.com.other 
+[root@srv7 named]# vim /var/named/163.com.zone 
+[root@srv7 named]# vim /var/named/163.com.other 
+[root@srv7 named]# !sys
+systemctl status named.service
+● named.service - Berkeley Internet Name Domain (DNS)
+   Loaded: loaded (/usr/lib/systemd/system/named.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since 四 2018-05-24 15:03:39 CST; 4min 3s ago
+  Process: 4997 ExecStop=/bin/sh -c /usr/sbin/rndc stop > /dev/null 2>&1 || /bin/kill -TERM $MAINPID (code=exited, status=0/SUCCESS)
+  Process: 2837 ExecStart=/usr/sbin/named -u named -c ${NAMEDCONF} $OPTIONS (code=exited, status=0/SUCCESS)
+  Process: 5234 ExecStartPre=/bin/bash -c if [ ! "$DISABLE_ZONE_CHECKING" == "yes" ]; then /usr/sbin/named-checkconf -z "$NAMEDCONF"; else echo "Checking of zone files is disabled"; fi (code=exited, status=1/FAILURE)
+ Main PID: 2840 (code=exited, status=0/SUCCESS)
+
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: zone qq.com/IN: loaded serial 0
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: zone 163.com/IN: loaded serial 0
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: 163.com.other:8: ignoring out-of-zone data (163.com)
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: zone qq.com/IN: has no NS records
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: zone qq.com/IN: not loaded due to errors.
+5月 24 15:03:39 srv7.tedu.cn bash[5234]: 163b/qq.com/IN: bad zone
+5月 24 15:03:39 srv7.tedu.cn systemd[1]: named.service: control process exited, code=exited status=1
+5月 24 15:03:39 srv7.tedu.cn systemd[1]: Failed to start Berkeley Internet Name Domain (DNS).
+5月 24 15:03:39 srv7.tedu.cn systemd[1]: Unit named.service entered failed state.
+5月 24 15:03:39 srv7.tedu.cn systemd[1]: named.service failed.
+Hint: Some lines were ellipsized, use -l to show in full.
+
